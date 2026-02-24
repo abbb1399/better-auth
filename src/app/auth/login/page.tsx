@@ -12,6 +12,7 @@ import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { SignUpTab } from "./_components/sign-up-tab";
 import { SignInTab } from "./_components/sign-in-tab";
+import { SocialAuthButtons } from "./_components/social-auth-buttons";
 
 type Tab = "signin" | "signup" | "email-verification" | "forgot-password";
 
@@ -41,7 +42,9 @@ export default function LoginPage() {
 
           <Separator />
 
-          <CardFooter className="grid grid-cols-2 gap-3"></CardFooter>
+          <CardFooter className="grid grid-cols-2 gap-3">
+            <SocialAuthButtons />
+          </CardFooter>
         </Card>
       </TabsContent>
 
@@ -56,7 +59,9 @@ export default function LoginPage() {
 
           <Separator />
 
-          <CardFooter className="grid grid-cols-2 gap-3"></CardFooter>
+          <CardFooter className="grid grid-cols-2 gap-3">
+            <SocialAuthButtons />
+          </CardFooter>
         </Card>
       </TabsContent>
 

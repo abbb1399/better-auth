@@ -8,15 +8,24 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { SignUpTab } from "./_components/sign-up-tab";
 import { SignInTab } from "./_components/sign-in-tab";
 import { SocialAuthButtons } from "./_components/social-auth-buttons";
+import { useRouter } from "next/router";
+import { authClient } from "@/lib/auth-client";
 
 type Tab = "signin" | "signup" | "email-verification" | "forgot-password";
 
 export default function LoginPage() {
+  const router = useRouter();
+  useEffect(() => {
+    authClient.getSession().then((session) => {
+      if (session.data != null) router.push("/");
+    });
+  }, [router]);
+
   const [selectedTab, setSelectedTab] = useState<Tab>("signin");
 
   return (

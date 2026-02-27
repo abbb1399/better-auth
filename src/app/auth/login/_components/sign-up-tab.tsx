@@ -17,7 +17,6 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { LoadingSwap } from "@/components/ui/loading-swap";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 const signUpSchema = z.object({
   name: z.string().min(1),
@@ -27,8 +26,11 @@ const signUpSchema = z.object({
 
 type SignUpForm = z.infer<typeof signUpSchema>;
 
-export function SignUpTab() {
-  const router = useRouter();
+export function SignUpTab({
+  openEmailVerificationTab,
+}: {
+  openEmailVerificationTab: (email: string) => void;
+}) {
   const form = useForm<SignUpForm>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -47,11 +49,12 @@ export function SignUpTab() {
         onError: (error) => {
           toast.error(error.error.message || "회원가입에 실패했습니다.");
         },
-        onSuccess: () => {
-          router.push("/");
-        },
       },
     );
+
+    if (res.error == null && !res.data.user.emailVerified) {
+      openEmailVerificationTab(data.email);
+    }
   }
 
   return (

@@ -13,20 +13,27 @@ import { Separator } from "@/components/ui/separator";
 import { SignUpTab } from "./_components/sign-up-tab";
 import { SignInTab } from "./_components/sign-in-tab";
 import { SocialAuthButtons } from "./_components/social-auth-buttons";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { EmailVerification } from "./_components/email-verification";
 
 type Tab = "signin" | "signup" | "email-verification" | "forgot-password";
 
 export default function LoginPage() {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [selectedTab, setSelectedTab] = useState<Tab>("signin");
+
   useEffect(() => {
     authClient.getSession().then((session) => {
       if (session.data != null) router.push("/");
     });
   }, [router]);
 
-  const [selectedTab, setSelectedTab] = useState<Tab>("signin");
+  const openEmailVerificationTab = (email: string) => {
+    setEmail(email);
+    setSelectedTab("email-verification");
+  };
 
   return (
     <Tabs
@@ -46,7 +53,7 @@ export default function LoginPage() {
             <CardTitle>로그인</CardTitle>
           </CardHeader>
           <CardContent>
-            <SignInTab />
+            <SignInTab openEmailVerificationTab={openEmailVerificationTab} />
           </CardContent>
 
           <Separator />
@@ -63,7 +70,7 @@ export default function LoginPage() {
             <CardTitle>회원가입</CardTitle>
           </CardHeader>
           <CardContent>
-            <SignUpTab />
+            <SignUpTab openEmailVerificationTab={openEmailVerificationTab} />
           </CardContent>
 
           <Separator />
@@ -79,7 +86,9 @@ export default function LoginPage() {
           <CardHeader className="text-2xl font-bold">
             <CardTitle>이메일 인증</CardTitle>
           </CardHeader>
-          <CardContent></CardContent>
+          <CardContent>
+            <EmailVerification email={email} />
+          </CardContent>
         </Card>
       </TabsContent>
 

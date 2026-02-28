@@ -14,7 +14,7 @@ import { SignUpTab } from "./_components/sign-up-tab";
 import { SignInTab } from "./_components/sign-in-tab";
 import { SocialAuthButtons } from "./_components/social-auth-buttons";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/auth-client";
 import { EmailVerification } from "./_components/email-verification";
 import { ForgotPassword } from "./_components/forgot-passoword";
 

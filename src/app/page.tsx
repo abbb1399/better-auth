@@ -25,15 +25,23 @@ export default function Home() {
         ) : (
           <>
             <h1 className="text-3xl font-bold">
-              안녕하세요. {session.user.name}님!
+              안녕하세요 {session.user.name}님!
             </h1>
-            <BetterAuthActionButton
-              size="lg"
-              variant="destructive"
-              action={() => authClient.signOut()}
-            >
-              로그아웃
-            </BetterAuthActionButton>
+            <div className="flex gap-4 justify-center">
+              <Button asChild size="lg">
+                <Link href="/profile">프로필</Link>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link href="/organizations">조직</Link>
+              </Button>
+              <BetterAuthActionButton
+                size="lg"
+                variant="destructive"
+                action={() => authClient.signOut()}
+              >
+                로그아웃
+              </BetterAuthActionButton>
+            </div>
           </>
         )}
       </div>

@@ -16,6 +16,7 @@ import { SocialAuthButtons } from "./_components/social-auth-buttons";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import { EmailVerification } from "./_components/email-verification";
+import { ForgotPassword } from "./_components/forgot-passoword";
 
 type Tab = "signin" | "signup" | "email-verification" | "forgot-password";
 
@@ -53,7 +54,10 @@ export default function LoginPage() {
             <CardTitle>로그인</CardTitle>
           </CardHeader>
           <CardContent>
-            <SignInTab openEmailVerificationTab={openEmailVerificationTab} />
+            <SignInTab
+              openEmailVerificationTab={openEmailVerificationTab}
+              openForgotPassword={() => setSelectedTab("forgot-password")}
+            />
           </CardContent>
 
           <Separator />
@@ -97,7 +101,9 @@ export default function LoginPage() {
           <CardHeader className="text-2xl font-bold">
             <CardTitle>비밀번호 찾기</CardTitle>
           </CardHeader>
-          <CardContent></CardContent>
+          <CardContent>
+            <ForgotPassword openSignInTab={() => setSelectedTab("signin")} />
+          </CardContent>
         </Card>
       </TabsContent>
     </Tabs>

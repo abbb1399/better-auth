@@ -24,6 +24,8 @@ import { redirect } from "next/navigation";
 // import { ProfileUpdateForm } from "./_components/profile-update-form";
 import { ReactNode, Suspense } from "react";
 import { ProfileUpdateForm } from "./_components/profile-update-form";
+import { ChangePasswordForm } from "./_components/change-password-form";
+import { SetPasswordButton } from "./_components/set-password-buttont";
 // import { SetPasswordButton } from "./_components/set-password-button";
 // import { ChangePasswordForm } from "./_components/change-password-form";
 // import { SessionManagement } from "./_components/session-management";
@@ -178,23 +180,21 @@ async function SecurityTab({
   email: string;
   isTwoFactorEnabled: boolean;
 }) {
-  // const [passkeys, accounts] = await Promise.all([
-  //   auth.api.listPasskeys({ headers: await headers() }),
-  //   auth.api.listUserAccounts({ headers: await headers() }),
-  // ]);
-
-  // const hasPasswordAccount = accounts.some(
-  //   (a) => a.providerId === "credential",
-  // );
+  const accounts = await auth.api.listUserAccounts({
+    headers: await headers(),
+  });
+  const hasPasswordAccount = accounts.some(
+    (a) => a.providerId === "credential",
+  );
 
   return (
     <div className="space-y-6">
-      {/* {hasPasswordAccount ? (
+      {hasPasswordAccount ? (
         <Card>
           <CardHeader>
-            <CardTitle>Change Password</CardTitle>
+            <CardTitle>비밀번호 변경</CardTitle>
             <CardDescription>
-              Update your password for improved security.
+              보안을 위해 비밀번호를 업데이트하세요.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -204,9 +204,9 @@ async function SecurityTab({
       ) : (
         <Card>
           <CardHeader>
-            <CardTitle>Set Password</CardTitle>
+            <CardTitle>비밀번호 설정</CardTitle>
             <CardDescription>
-              We will send you a password reset email to set up a password.
+              비밀번호를 설정하기 위해 비밀번호 재설정 이메일을 발송합니다.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -223,12 +223,12 @@ async function SecurityTab({
             </Badge>
           </CardHeader>
           <CardContent>
-            <TwoFactorAuth isEnabled={isTwoFactorEnabled} />
+            {/* <TwoFactorAuth isEnabled={isTwoFactorEnabled} /> */}
           </CardContent>
         </Card>
       )}
 
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Passkeys</CardTitle>
         </CardHeader>

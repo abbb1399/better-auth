@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/drizzle/db";
+import * as schema from "@/drizzle/schema";
 import { nextCookies } from "better-auth/next-js";
 import { sendPasswordResetEmail } from "../emails/password-reset";
 import { sendEmailVerificationEmail } from "../emails/email-verification";
@@ -8,12 +9,21 @@ import { createAuthMiddleware } from "better-auth/api";
 import { sendWelcomeEmail } from "../emails/welcome-email";
 import { sendDeleteAccountVerificationEmail } from "../emails/delete-account-verification";
 import { twoFactor } from "better-auth/plugins/two-factor";
+import { passkey } from "@better-auth/passkey";
 
 export const auth = betterAuth({
   user: {
     changeEmail: {
       enabled: true,
-      sendChangeEmailVerification: async ({ user, url, newEmail }) => {
+      sendChangeEmailVerification: async ({
+        user,
+        url,
+        newEmail,
+      }: {
+        user: { name: string; email: string };
+        url: string;
+        newEmail: string;
+      }) => {
         await sendEmailVerificationEmail({
           user: { ...user, email: newEmail },
           url,
@@ -73,9 +83,10 @@ export const auth = betterAuth({
       maxAge: 60, // 1분
     },
   },
-  plugins: [nextCookies(), twoFactor()],
+  plugins: [nextCookies(), twoFactor(), passkey()],
   database: drizzleAdapter(db, {
     provider: "pg",
+    schema,
   }),
   hooks: {
     after: createAuthMiddleware(async (ctx) => {

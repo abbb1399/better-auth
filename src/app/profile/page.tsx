@@ -27,6 +27,7 @@ import { ProfileUpdateForm } from "./_components/profile-update-form";
 import { ChangePasswordForm } from "./_components/change-password-form";
 import { SetPasswordButton } from "./_components/set-password-buttont";
 import { SessionManagement } from "./_components/session-management";
+import { AccountLinking } from "./_components/account-linking";
 // import { SetPasswordButton } from "./_components/set-password-button";
 // import { ChangePasswordForm } from "./_components/change-password-form";
 // import { SessionManagement } from "./_components/session-management";
@@ -150,7 +151,7 @@ async function LinkedAccountsTab() {
   return (
     <Card>
       <CardContent>
-        {/* <AccountLinking currentAccounts={nonCredentialAccounts} /> */}
+        <AccountLinking currentAccounts={nonCredentialAccounts} />
       </CardContent>
     </Card>
   );

@@ -28,6 +28,7 @@ import { ChangePasswordForm } from "./_components/change-password-form";
 import { SetPasswordButton } from "./_components/set-password-buttont";
 import { SessionManagement } from "./_components/session-management";
 import { AccountLinking } from "./_components/account-linking";
+import { AccountDeletion } from "./_components/account-deletion";
 // import { SetPasswordButton } from "./_components/set-password-button";
 // import { ChangePasswordForm } from "./_components/change-password-form";
 // import { SessionManagement } from "./_components/session-management";
@@ -132,7 +133,9 @@ export default async function ProfilePage() {
             <CardHeader>
               <CardTitle className="text-destructive">Danger Zone</CardTitle>
             </CardHeader>
-            <CardContent>{/* <AccountDeletion /> */}</CardContent>
+            <CardContent>
+              <AccountDeletion />
+            </CardContent>
           </Card>
         </TabsContent>
       </Tabs>

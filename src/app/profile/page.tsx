@@ -26,6 +26,7 @@ import { ReactNode, Suspense } from "react";
 import { ProfileUpdateForm } from "./_components/profile-update-form";
 import { ChangePasswordForm } from "./_components/change-password-form";
 import { SetPasswordButton } from "./_components/set-password-buttont";
+import { SessionManagement } from "./_components/session-management";
 // import { SetPasswordButton } from "./_components/set-password-button";
 // import { ChangePasswordForm } from "./_components/change-password-form";
 // import { SessionManagement } from "./_components/session-management";
@@ -164,10 +165,10 @@ async function SessionsTab({
   return (
     <Card>
       <CardContent>
-        {/* <SessionManagement
+        <SessionManagement
           sessions={sessions}
           currentSessionToken={currentSessionToken}
-        /> */}
+        />
       </CardContent>
     </Card>
   );

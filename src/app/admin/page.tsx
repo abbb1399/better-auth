@@ -21,8 +21,8 @@ import { UserRow } from "./_components/user-row";
 
 export default async function AdminPage() {
   const session = await auth.api.getSession({ headers: await headers() });
-
   if (session == null) return redirect("/auth/login");
+
   const hasAccess = await auth.api.userHasPermission({
     headers: await headers(),
     body: { permissions: { user: ["list"] } },
@@ -59,7 +59,7 @@ export default async function AdminPage() {
                   <TableHead>사용자</TableHead>
                   <TableHead>역할</TableHead>
                   <TableHead>가입일</TableHead>
-                  <TableHead className="w-[100px]">작업</TableHead>
+                  <TableHead className="w-25">작업</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

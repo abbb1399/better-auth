@@ -130,7 +130,11 @@ export function UserRow({
           {user.role}
         </Badge>
       </TableCell>
-      <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
+      <TableCell>
+        {new Date(user.createdAt).toLocaleDateString("ko-KR", {
+          timeZone: "Asia/Seoul",
+        })}
+      </TableCell>
       <TableCell>
         {!isSelf && (
           <AlertDialog>

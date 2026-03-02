@@ -6,6 +6,7 @@ import {
   adminClient,
 } from "better-auth/client/plugins";
 import { passkeyClient } from "@better-auth/passkey/client";
+import { ac, admin, user } from "@/components/auth/permissions";
 
 export const authClient = createAuthClient({
   plugins: [
@@ -16,6 +17,12 @@ export const authClient = createAuthClient({
       },
     }),
     passkeyClient(),
-    adminClient(),
+    adminClient({
+      ac,
+      roles: {
+        admin,
+        user,
+      },
+    }),
   ],
 });

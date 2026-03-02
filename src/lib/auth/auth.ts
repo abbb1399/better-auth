@@ -9,8 +9,8 @@ import { createAuthMiddleware } from "better-auth/api";
 import { sendWelcomeEmail } from "../emails/welcome-email";
 import { sendDeleteAccountVerificationEmail } from "../emails/delete-account-verification";
 import { twoFactor } from "better-auth/plugins/two-factor";
-import { passkey } from "@better-auth/passkey";
 import { admin } from "better-auth/plugins/admin";
+import { passkey } from "@better-auth/passkey";
 
 export const auth = betterAuth({
   user: {

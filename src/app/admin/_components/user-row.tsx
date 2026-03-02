@@ -23,7 +23,6 @@ import {
 import { TableCell, TableRow } from "@/components/ui/table";
 import { authClient } from "@/lib/auth/auth-client";
 import { UserWithRole } from "better-auth/plugins/admin";
-import { ErrorContext } from "better-auth/react";
 import { MoreHorizontal } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -43,7 +42,7 @@ export function UserRow({
     authClient.admin.impersonateUser(
       { userId },
       {
-        onError: (error: ErrorContext) => {
+        onError: (error) => {
           toast.error(error.error.message || "사용자 가장에 실패했습니다");
         },
         onSuccess: () => {
@@ -58,7 +57,7 @@ export function UserRow({
     authClient.admin.banUser(
       { userId },
       {
-        onError: (error: ErrorContext) => {
+        onError: (error) => {
           toast.error(error.error.message || "사용자 정지에 실패했습니다");
         },
         onSuccess: () => {
@@ -73,7 +72,7 @@ export function UserRow({
     authClient.admin.unbanUser(
       { userId },
       {
-        onError: (error: ErrorContext) => {
+        onError: (error) => {
           toast.error(error.error.message || "사용자 정지 해제에 실패했습니다");
         },
         onSuccess: () => {
@@ -88,7 +87,7 @@ export function UserRow({
     authClient.admin.revokeUserSessions(
       { userId },
       {
-        onError: (error: ErrorContext) => {
+        onError: (error) => {
           toast.error(error.error.message || "세션 취소에 실패했습니다");
         },
         onSuccess: () => {
@@ -102,7 +101,7 @@ export function UserRow({
     authClient.admin.removeUser(
       { userId },
       {
-        onError: (error: ErrorContext) => {
+        onError: (error) => {
           toast.error(error.error.message || "사용자 삭제에 실패했습니다");
         },
         onSuccess: () => {

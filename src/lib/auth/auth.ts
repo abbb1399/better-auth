@@ -12,8 +12,13 @@ import { twoFactor } from "better-auth/plugins/two-factor";
 import { admin as adminPlugin } from "better-auth/plugins/admin";
 import { passkey } from "@better-auth/passkey";
 import { ac, admin, user } from "@/components/auth/permissions";
+import { organization } from "better-auth/plugins";
+import { sendOrganizationInviteEmail } from "../emails/organization-invite-email";
+import { desc, eq } from "drizzle-orm";
+import { member } from "@/drizzle/schema";
 
 export const auth = betterAuth({
+  appName: "Better Auth Demo",
   user: {
     changeEmail: {
       enabled: true,
@@ -96,6 +101,20 @@ export const auth = betterAuth({
         user,
       },
     }),
+    organization({
+      sendInvitationEmail: async ({
+        email,
+        organization,
+        inviter,
+        invitation,
+      }) =>
+        await sendOrganizationInviteEmail({
+          invitation,
+          inviter: inviter.user,
+          organization,
+          email,
+        }),
+    }),
   ],
   database: drizzleAdapter(db, {
     provider: "pg",
@@ -114,5 +133,26 @@ export const auth = betterAuth({
         }
       }
     }),
+  },
+  databaseHooks: {
+    // 로그인할때마다
+    session: {
+      create: {
+        before: async (userSession) => {
+          const membership = await db.query.member.findFirst({
+            where: eq(member.userId, userSession.userId),
+            orderBy: desc(member.createdAt),
+            columns: { organizationId: true },
+          });
+
+          return {
+            data: {
+              ...userSession,
+              activeOrganizationId: membership?.organizationId,
+            },
+          };
+        },
+      },
+    },
   },
 });
